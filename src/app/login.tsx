@@ -1,6 +1,12 @@
 "use client";
 
 import { signIn, signUp } from "@/actions/users";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AlertCircle } from "lucide-react";
 import { useActionState } from "react";
 
 export default function Login() {
@@ -14,41 +20,81 @@ export default function Login() {
     email: "",
   });
 
-  console.log(signUpState, signInState);
-
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-2">
-      <h1>Login or register</h1>
-      <form className="flex w-full flex-col items-center justify-center gap-2">
-        <input
-          className="border p-2"
-          type="email"
-          name="email"
-          placeholder="Email"
-          defaultValue={signUpState.email || signInState.email}
-        />
-        <input
-          className="border p-2"
-          type="password"
-          name="password"
-          placeholder="Password"
-        />
+    <Tabs
+      defaultValue="login"
+      className="flex w-[400px] flex-col items-center justify-center gap-2"
+    >
+      <TabsList className="w-full">
+        <TabsTrigger value="login">Login</TabsTrigger>
+        <TabsTrigger value="register">Register</TabsTrigger>
+      </TabsList>
+      <TabsContent value="login" className="w-full">
+        <form action={signInAction} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              className="border p-2"
+              type="email"
+              name="email"
+              placeholder="Email"
+              defaultValue={signInState.email}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              className="border p-2"
+              type="password"
+              name="password"
+              placeholder="Password"
+            />
+          </div>
 
-        <button type="submit" formAction={signInAction}>
-          Sign in
-        </button>
+          <Button type="submit">Sign in</Button>
 
-        <button type="submit" formAction={signUpAction}>
-          Sign up
-        </button>
+          {signInState.error && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{signInState.error}</AlertDescription>
+            </Alert>
+          )}
+        </form>
+      </TabsContent>
+      <TabsContent value="register" className="w-full">
+        <form action={signUpAction} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              className="border p-2"
+              type="email"
+              name="email"
+              placeholder="Email"
+              defaultValue={signUpState.email}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              className="border p-2"
+              type="password"
+              name="password"
+              placeholder="Password"
+            />
+          </div>
 
-        {signUpState.error && (
-          <p className="text-red-500">{signUpState.error}</p>
-        )}
-        {signInState.error && (
-          <p className="text-red-500">{signInState.error}</p>
-        )}
-      </form>
-    </div>
+          <Button type="submit">Sign up</Button>
+
+          {signUpState.error && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{signUpState.error}</AlertDescription>
+            </Alert>
+          )}
+        </form>
+      </TabsContent>
+    </Tabs>
   );
 }
