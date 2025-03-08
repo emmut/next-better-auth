@@ -12,7 +12,7 @@ type SignUpState = {
 
 export async function signIn(
   state: SignInState,
-  formData: FormData
+  formData: FormData,
 ): Promise<SignInState> {
   const email = formData.get("email");
   const password = formData.get("password");
@@ -36,7 +36,7 @@ export async function signIn(
 
 export async function signUp(
   state: SignUpState,
-  formData: FormData
+  formData: FormData,
 ): Promise<SignUpState> {
   const email = formData.get("email");
   const password = formData.get("password");

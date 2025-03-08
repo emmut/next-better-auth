@@ -14,9 +14,9 @@ export default function Login() {
   });
 
   return (
-    <div className="flex flex-col gap-2 w-full justify-center items-center">
+    <div className="flex w-full flex-col items-center justify-center gap-2">
       <h1>Login or register</h1>
-      <form className="flex w-full flex-col gap-2 justify-center items-center">
+      <form className="flex w-full flex-col items-center justify-center gap-2">
         <input className="border" type="email" name="email" />
         <input className="border" type="password" name="password" />
 
