@@ -16,20 +16,20 @@ export async function signIn(
   state: SignInState,
   formData: FormData,
 ): Promise<SignInState> {
-  const email = formData.get("email");
-  const password = formData.get("password");
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
 
   try {
     await auth.api.signInEmail({
       body: {
-        email: email as string,
-        password: password as string,
+        email,
+        password,
       },
     });
   } catch (error: unknown) {
     if (error instanceof Error) {
       return {
-        ...state,
+        email,
         error: error.message,
       };
     }
@@ -46,26 +46,26 @@ export async function signUp(
   state: SignUpState,
   formData: FormData,
 ): Promise<SignUpState> {
-  const email = formData.get("email");
-  const password = formData.get("password");
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
 
   try {
     await auth.api.signUpEmail({
       body: {
-        email: email as string,
-        password: password as string,
+        email,
+        password,
         name: "test",
       },
     });
   } catch (error: unknown) {
     if (error instanceof Error) {
       return {
-        ...state,
+        email,
         error: error.message,
       };
     }
     return {
-      ...state,
+      email,
       error: "An unknown error occurred",
     };
   }
