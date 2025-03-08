@@ -1,3 +1,4 @@
+import { SignOut } from "@/components/sign-out";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Login from "./login";
@@ -11,10 +12,9 @@ export default async function Home() {
       <main className="row-start-2 flex flex-col items-center gap-8 sm:items-start">
         <h1 className="text-4xl font-bold">BetterAuth</h1>
 
-        <Login />
-
         {session && <p>Signed in as {session.user.email}</p>}
-        {!session && <p>Not signed in</p>}
+        {!session && <Login />}
+        {session && <SignOut />}
       </main>
     </div>
   );

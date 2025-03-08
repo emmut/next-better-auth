@@ -4,10 +4,12 @@ import { redirect } from "next/navigation";
 
 type SignInState = {
   error: string | null;
+  email: string;
 };
 
 type SignUpState = {
   error: string | null;
+  email: string;
 };
 
 export async function signIn(
@@ -26,9 +28,15 @@ export async function signIn(
     });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return { error: error.message };
+      return {
+        ...state,
+        error: error.message,
+      };
     }
-    return { error: "An unknown error occurred" };
+    return {
+      ...state,
+      error: "An unknown error occurred",
+    };
   }
 
   redirect("/dashboard");
@@ -51,9 +59,15 @@ export async function signUp(
     });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return { error: error.message };
+      return {
+        ...state,
+        error: error.message,
+      };
     }
-    return { error: "An unknown error occurred" };
+    return {
+      ...state,
+      error: "An unknown error occurred",
+    };
   }
 
   redirect("/dashboard");
