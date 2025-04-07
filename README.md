@@ -46,7 +46,13 @@ Required environment variables:
 - `BETTER_AUTH_SECRET`: Random value used by the library for encryption and generating hashes. Use `openssl rand -base64 32` to generate a new value.
 - `DB_FILE_NAME`: Path to the SQLite database file (default: `file:local.db`)
 
-4. Start the development server:
+4. Run the migrations:
+
+```bash
+pnpm db:migrate
+```
+
+5. Start the development server:
 
 ```bash
 pnpm dev
@@ -61,7 +67,19 @@ This project uses Drizzle ORM with SQLite. Database migrations are managed with 
 To run migrations:
 
 ```bash
-pnpm drizzle-kit push:sqlite
+pnpm db:migrate
+```
+
+To use drizzle studio:
+
+```bash
+pnpm db:studio
+```
+
+To use local drizzle kit:
+
+```bash
+pnpm drizzle-kit -h
 ```
 
 ## Scripts
