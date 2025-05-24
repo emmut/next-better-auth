@@ -64,11 +64,38 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 This project uses Drizzle ORM with SQLite. Database migrations are managed with Drizzle Kit.
 
-To run migrations:
+### Available Database Commands
 
-```bash
-pnpm db:migrate
-```
+- `pnpm db` - Run drizzle-kit CLI directly (use with additional flags)
+- `pnpm db:generate` - Generate migration files from schema changes
+- `pnpm db:migrate` - Apply migrations to the database
+- `pnpm db:push` - Push schema changes directly to database (development)
+- `pnpm db:studio` - Open Drizzle Studio (database browser)
+- `pnpm db:check` - Check migration consistency
+
+### Workflow for Schema Changes
+
+1. **Development workflow** (recommended for local development):
+   ```bash
+   # Make changes to your schema in src/db/schema.ts
+   pnpm db:push  # Push changes directly to database
+   ```
+
+2. **Migration workflow** (recommended for production):
+   ```bash
+   # Make changes to your schema in src/db/schema.ts
+   pnpm db:generate  # Generate migration files
+   pnpm db:migrate   # Apply migrations to database
+   ```
+
+### Database Schema
+
+The application includes the following models:
+
+- **User**: User accounts with authentication details
+- **Session**: User sessions for authentication
+- **Account**: OAuth and authentication provider accounts
+- **Verification**: Email verification and password reset tokens
 
 To use drizzle studio:
 
@@ -76,10 +103,12 @@ To use drizzle studio:
 pnpm db:studio
 ```
 
-To use local drizzle kit:
+To use drizzle-kit with custom commands:
 
 ```bash
-pnpm drizzle-kit -h
+pnpm db --help
+pnpm db introspect
+pnpm db drop
 ```
 
 ## Scripts
@@ -90,6 +119,15 @@ pnpm drizzle-kit -h
 - `pnpm lint` - Run ESLint to check for issues
 - `pnpm format` - Format the code with Prettier
 - `pnpm format:check` - Check code formatting without making changes
+
+### Database Scripts
+
+- `pnpm db` - Run drizzle-kit CLI with custom commands
+- `pnpm db:generate` - Generate migration files from schema changes
+- `pnpm db:migrate` - Apply migrations to database
+- `pnpm db:push` - Push schema changes directly (development)
+- `pnpm db:studio` - Open Drizzle Studio
+- `pnpm db:check` - Check migration consistency
 
 ## Project Structure
 
