@@ -72,6 +72,7 @@ This project uses Prisma ORM with SQLite. Database operations are managed with P
 
 ### Available Database Commands
 
+- `pnpm db` - Run Prisma CLI directly (use with additional flags)
 - `pnpm db:generate` - Generate the Prisma client
 - `pnpm db:push` - Push schema changes to the database
 - `pnpm db:migrate` - Create and run migrations
@@ -95,6 +96,15 @@ The application includes the following models:
 3. For development, push changes: `pnpm db:push`
 4. For production, create a migration: `pnpm db:migrate`
 
+### Using Prisma CLI Directly
+
+```bash
+pnpm db --help
+pnpm db validate
+pnpm db format
+pnpm db introspect
+```
+
 ## Scripts
 
 - `pnpm dev` - Start the development server with Turbopack
@@ -106,6 +116,7 @@ The application includes the following models:
 
 ### Database Scripts
 
+- `pnpm db` - Run Prisma CLI with custom commands
 - `pnpm db:generate` - Generate Prisma client
 - `pnpm db:push` - Push schema to database
 - `pnpm db:migrate` - Create and run migrations
