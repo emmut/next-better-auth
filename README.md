@@ -1,6 +1,6 @@
 # Next.js Better Auth
 
-This is a Next.js project that demonstrates authentication using the `better-auth` library with Drizzle ORM for database operations. It provides a clean, modern authentication system for Next.js applications.
+This is a Next.js project that demonstrates authentication using the `better-auth` library with Prisma ORM for database operations. It provides a clean, modern authentication system for Next.js applications.
 
 ## Features
 
@@ -8,7 +8,7 @@ This is a Next.js project that demonstrates authentication using the `better-aut
 - Email and password authentication
 - Protected routes
 - Dashboard area
-- SQLite database with Drizzle ORM
+- SQLite database with Prisma ORM
 - TypeScript support
 - Tailwind CSS for styling
 - Modern React (v19) features
@@ -23,7 +23,7 @@ This is a Next.js project that demonstrates authentication using the `better-aut
 1. Use [degit](https://github.com/Rich-Harris/degit) to scaffold the project:
 
 ```bash
-pnpm dlx degit --mode=git git@github.com:compileit-ab/compileit-start-web.git my-app
+pnpm dlx degit --mode=git git@github.com/compileit-ab/compileit-start-web.git my-app
 ```
 
 Change `my-app` to the desired folder name.
@@ -44,15 +44,21 @@ cp .env.example .env.local
 
 Required environment variables:
 - `BETTER_AUTH_SECRET`: Random value used by the library for encryption and generating hashes. Use `openssl rand -base64 32` to generate a new value.
-- `DB_FILE_NAME`: Path to the SQLite database file (default: `file:local.db`)
+- `DATABASE_URL`: Path to the SQLite database file (default: `file:./local.db`)
 
-4. Run the migrations:
+4. Generate the Prisma client:
 
 ```bash
-pnpm db:migrate
+pnpm db:generate
 ```
 
-5. Start the development server:
+5. Push the database schema:
+
+```bash
+pnpm db:push
+```
+
+6. Start the development server:
 
 ```bash
 pnpm dev
@@ -62,25 +68,32 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Database Setup
 
-This project uses Drizzle ORM with SQLite. Database migrations are managed with Drizzle Kit.
+This project uses Prisma ORM with SQLite. Database operations are managed with Prisma CLI.
 
-To run migrations:
+### Available Database Commands
 
-```bash
-pnpm db:migrate
-```
+- `pnpm db:generate` - Generate the Prisma client
+- `pnpm db:push` - Push schema changes to the database
+- `pnpm db:migrate` - Create and run migrations
+- `pnpm db:studio` - Open Prisma Studio (database browser)
+- `pnpm db:reset` - Reset the database and run all migrations
+- `pnpm db:seed` - Run database seeding (if configured)
 
-To use drizzle studio:
+### Database Schema
 
-```bash
-pnpm db:studio
-```
+The application includes the following models:
 
-To use local drizzle kit:
+- **User**: User accounts with authentication details
+- **Session**: User sessions for authentication
+- **Account**: OAuth and authentication provider accounts
+- **Verification**: Email verification and password reset tokens
 
-```bash
-pnpm drizzle-kit -h
-```
+### Making Schema Changes
+
+1. Edit the schema in `prisma/schema.prisma`
+2. Generate the client: `pnpm db:generate`
+3. For development, push changes: `pnpm db:push`
+4. For production, create a migration: `pnpm db:migrate`
 
 ## Scripts
 
@@ -91,26 +104,44 @@ pnpm drizzle-kit -h
 - `pnpm format` - Format the code with Prettier
 - `pnpm format:check` - Check code formatting without making changes
 
+### Database Scripts
+
+- `pnpm db:generate` - Generate Prisma client
+- `pnpm db:push` - Push schema to database
+- `pnpm db:migrate` - Create and run migrations
+- `pnpm db:studio` - Open Prisma Studio
+- `pnpm db:reset` - Reset database
+- `pnpm db:seed` - Seed database
+
 ## Project Structure
 
 ```
 /
 ├── src/
-│   ├── actions/      # Server actions
-│   ├── app/          # Next.js app router
-│   ├── components/   # Reusable UI components
-│   ├── db/           # Database setup and schema
-│   └── lib/          # Utility functions and configurations
-├── drizzle/          # Database migrations
-├── public/           # Static assets
+│   ├── actions/          # Server actions
+│   ├── app/              # Next.js app router
+│   ├── components/       # Reusable UI components
+│   ├── generated/prisma/ # Generated Prisma client
+│   ├── lib/              # Utility functions and configurations
+│   └── env.ts            # Environment variable validation
+├── prisma/
+│   └── schema.prisma     # Database schema
+├── public/               # Static assets
 └── ...configuration files
 ```
+
+## Environment Variables
+
+The project uses environment variable validation with Zod. All required variables are defined in `src/env.ts`:
+
+- `BETTER_AUTH_SECRET` - Secret key for authentication
+- `DATABASE_URL` - Database connection string
 
 ## Learn More
 
 - [Next.js Documentation](https://nextjs.org/docs)
-- [better-auth Documentation](https://github.com/your-package/better-auth)
-- [Drizzle ORM Documentation](https://orm.drizzle.team/docs/overview)
+- [Better Auth Documentation](https://www.better-auth.com/docs)
+- [Prisma Documentation](https://www.prisma.io/docs)
 
 ## License
 
