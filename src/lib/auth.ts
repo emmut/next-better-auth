@@ -1,13 +1,13 @@
-import { db } from "@/db";
-import { schema } from "@/db/schema";
+import { PrismaClient } from "@/generated/prisma";
 import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 
+const primsa = new PrismaClient();
+
 export const auth = betterAuth({
-  database: drizzleAdapter(db, {
+  database: prismaAdapter(primsa, {
     provider: "sqlite",
-    schema,
   }),
   emailAndPassword: {
     enabled: true,
