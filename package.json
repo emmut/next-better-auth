@@ -27,6 +27,7 @@
     "clsx": "^2.1.1",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.43.1",
+    "jiti": "^1.21.7",
     "lucide-react": "^0.511.0",
     "next": "15.2.1",
     "prettier-plugin-tailwindcss": "^0.6.11",
